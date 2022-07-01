@@ -25,9 +25,10 @@ endif
 
 call plug#begin(expand('~/.config/nvim/plugged'))
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'
+
 Plug 'arcticicestudio/nord-vim'
 Plug 'preservim/nerdtree'
 Plug 'terryma/vim-multiple-cursors' " use ctrl + n
@@ -37,6 +38,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'ahmedkhalf/project.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'Mofiqul/vscode.nvim'
 
 call plug#end()
 
@@ -194,9 +196,17 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 set background=dark
-colorscheme nord
+colorscheme vscode
 
-let g:airline_theme='nord'
+lua << EOF
+require("lualine").setup({
+    options = {
+        -- ...
+        theme = "vscode",
+        -- ...
+    },
+})
+EOF
 
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -316,6 +326,11 @@ EOF
 " => telescope settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
+require("project_nvim").setup {
+	-- your configuration comes here
+	-- or leave it empty to use the default settings
+	-- refer to the configuration section below
+	}
 require('telescope').load_extension('projects')
 EOF
 " Find files using Telescope command-line sugar.
