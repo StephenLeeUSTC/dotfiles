@@ -26,10 +26,7 @@ endif
 call plug#begin(expand('~/.config/nvim/plugged'))
 
 Plug 'nvim-lualine/lualine.nvim'
-" If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'
-
-Plug 'arcticicestudio/nord-vim'
 Plug 'preservim/nerdtree'
 Plug 'terryma/vim-multiple-cursors' " use ctrl + n
 Plug 'neoclide/coc.nvim'  " Auto Completion
@@ -38,7 +35,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'ahmedkhalf/project.nvim'
 Plug 'windwp/nvim-autopairs'
-Plug 'Mofiqul/vscode.nvim'
+Plug 'Mofiqul/vscode.nvim' " colorscheme
 Plug 'phaazon/hop.nvim'
 
 call plug#end()
@@ -59,7 +56,7 @@ au FocusGained,BufEnter * checktime
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = " "
+let mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -209,7 +206,6 @@ require("lualine").setup({
 })
 EOF
 
-
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 set fileencoding=utf-8
@@ -217,7 +213,6 @@ set fileencodings=utf-8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
@@ -233,35 +228,11 @@ map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
 
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-" let MRU_Max_Entries = 400
-" map <leader>f :MRU<CR>
-
-
-""""""""""""""""""""""""""""""
-" => CTRL-P
-""""""""""""""""""""""""""""""
-" let g:ctrlp_working_path_mode = 0
-" 
-" " Quickly find and open a file in the current working directory
-" let g:ctrlp_map = '<C-f>'
-" map <leader>j :CtrlP<cr>
-" 
-" " Quickly find and open a buffer
-" map <leader>b :CtrlPBuffer<cr>
-" 
-" let g:ctrlp_max_height = 20
-" let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
-
-
 "*****************************************************************************
 "" Commands
 "*****************************************************************************
 " remove trailing whitespaces
 command! FixWhitespace :%s/\s\+$//e
-
 
 "=================================================================================
 "
@@ -315,7 +286,7 @@ endif
 endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim comment
+" => vim-comment
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Somewhere after plug#end()
 lua << EOF
@@ -324,7 +295,7 @@ EOF
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => telescope settings
+" => Telescope settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
 require("project_nvim").setup {
@@ -342,7 +313,7 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fp <cmd>Telescope projects<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => coc settings
+" => COC settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -404,10 +375,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -494,9 +461,20 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 lua << EOF
-require("hop").setup {}
-vim.api.nvim_set_keymap('', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<cr>", {})
-vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<cr>", {})
+vim.cmd[[ hi HopNextKey cterm=bold ctermfg=176 gui=bold guibg=#ff00ff guifg=#ffffff ]]
+vim.cmd[[ hi HopNextKey1 cterm=bold ctermfg=176 gui=bold guibg=#ff00ff guifg=#ffffff ]]
+vim.cmd[[ hi HopNextKey2 cterm=bold ctermfg=176 gui=bold guibg=#ff00ff guifg=#ffffff ]]
+
+require('hop').setup({
+  case_insensitive = true,
+  char2_fallback_key = '<CR>',
+  quit_key='<Esc>',
+})
+
+vim.keymap.set('n', 'f', function()
+  return require('hop').hint_char2()
+end,
+{ silent = true, noremap = true, desc = "nvim-hop char2" })
 EOF
+
+
