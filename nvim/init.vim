@@ -29,7 +29,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'preservim/nerdtree'
 Plug 'terryma/vim-multiple-cursors' " use ctrl + n
-Plug 'neoclide/coc.nvim'  " Auto Completion
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " auto-complete
 Plug 'numToStr/Comment.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -374,7 +374,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>cr <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>cf <Plug>(coc-format-selected)
+nmap <leader>cf <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
