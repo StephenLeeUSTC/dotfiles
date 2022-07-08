@@ -268,10 +268,10 @@ vmap <F5> <Esc>:call CompileRun()<CR>
 func! CompileRun()
 exec "w"
 if &filetype == 'c'
-    exec "!clang % -o %<"
+    exec "!gcc % -o %<"
     exec "!time ./%<"
 elseif &filetype == 'cpp'
-    exec "!clang++ -std=c++11 % -o %<"
+    exec "!g++ -std=c++11 % -o %<"
     exec "!time ./%<"
 elseif &filetype == 'sh'
     exec "!time bash %"
