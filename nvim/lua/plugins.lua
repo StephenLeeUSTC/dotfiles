@@ -1,12 +1,11 @@
+local fn = vim.fn
 -- 自动安装 Packer.nvim
 -- 插件安装目录
 -- ~/.local/share/nvim/site/pack/packer/
-local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local paccker_bootstrap
 if fn.empty(fn.glob(install_path)) > 0 then
   vim.notify("Installing Pakcer.nvim，loading...")
-  paccker_bootstrap = fn.system({
+  PACCKER_BOOTSTRAP = fn.system{
     "git",
     "clone",
     "--depth",
@@ -14,15 +13,18 @@ if fn.empty(fn.glob(install_path)) > 0 then
     "https://github.com/wbthomason/packer.nvim",
     -- "https://gitcode.net/mirrors/wbthomason/packer.nvim",
     install_path,
-  })
-
-  -- https://github.com/wbthomason/packer.nvim/issues/750
-  local rtp_addition = vim.fn.stdpath("data") .. "/site/pack/*/start/*"
-  if not string.find(vim.o.runtimepath, rtp_addition) then
-    vim.o.runtimepath = rtp_addition .. "," .. vim.o.runtimepath
-  end
-  vim.notify("Pakcer.nvim installed.")
+  }
+  print "Installing packer close and reopen Neovim..."
+  vim.cmd [[packadd packer.nvim]]
 end
+
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]]
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
@@ -35,7 +37,6 @@ packer.startup({
   function(use)
     -- Packer 可以升级自己
     use("wbthomason/packer.nvim")
-
     -------------------------- plugins -------------------------------------------
     -- nvim-tree
     use({
@@ -63,19 +64,21 @@ packer.startup({
     use("nvim-telescope/telescope-ui-select.nvim")
     -- project
     use("ahmedkhalf/project.nvim")
-    -- indent-blankline
-    use("lukas-reineke/indent-blankline.nvim")
-    -- treesitter
-    use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+    -- surround
+    use("ur4ltz/surround.nvim")
+    -- Comment
+    use("numToStr/Comment.nvim")
+    -- nvim-autopairs
+    use("windwp/nvim-autopairs")
+
     --------------------- LSP --------------------
-    -- use({ "williamboman/nvim-lsp-installer", commit = "36b44679f7cc73968dbb3b09246798a19f7c14e0" })
     use({ "williamboman/nvim-lsp-installer" })
     -- Lspconfig
     use({ "neovim/nvim-lspconfig" })
     -- 补全引擎
     use("hrsh7th/nvim-cmp")
     -- snippet 引擎
-    use("hrsh7th/vim-vsnip")
+    use("L3MON4D3/LuaSnip")
     -- 补全源
     use("hrsh7th/cmp-vsnip")
     use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
@@ -101,18 +104,11 @@ packer.startup({
     use("Mofiqul/vscode.nvim")
     -- Solarized
     use("https://github.com/ericbn/vim-solarized")
-    -------------------------------------------------------
-    -- surround
-    use("ur4ltz/surround.nvim")
-    -- Comment
-    use("numToStr/Comment.nvim")
-    -- nvim-autopairs
-    use("windwp/nvim-autopairs")
     ----------------------------------------------
 
     use("j-hui/fidget.nvim")
-    if paccker_bootstrap then
-      packer.sync()
+    if PACCKER_BOOTSTRAP then
+      require("packer").sync()
     end
   end,
   config = {
