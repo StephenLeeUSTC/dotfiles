@@ -28,4 +28,5 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export PYTHONPATH=$TVM_HOME/python:${PYTHONPATH}
 
+# config for autojump, installed by homebrew
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
