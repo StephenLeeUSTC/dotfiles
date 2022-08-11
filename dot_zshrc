@@ -1,0 +1,12 @@
+# zsh config based on oh-my-zsh
+
+export ZSH="/Users/liwei/.oh-my-zsh"
+
+ZSH_THEME="ys"
+
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+
+alias vim="nvim"
+alias tvmc="python -m tvm.driver.tvmc"
