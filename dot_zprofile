@@ -4,7 +4,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 
-export TVM_HOME="/Users/liwei/Workspace/tvm"
+export TVM_HOME="$HOME/Workspace/tvm"
 
 export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 

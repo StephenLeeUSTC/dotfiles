@@ -11,3 +11,16 @@
   defaultBranch = main
 [core]
 	editor = nvim
+	pager = less -x1,5
+	autocrlf = input
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	interactive = true
+[push]
+	default = simple
+[pull]
+	ff = only
+[merge]
+	ff = only
