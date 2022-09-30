@@ -10,3 +10,4 @@ source $ZSH/oh-my-zsh.sh
 
 alias vim="nvim"
 alias tvmc="python -m tvm.driver.tvmc"
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'

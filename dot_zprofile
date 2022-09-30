@@ -1,8 +1,8 @@
 export EDITOR=nvim
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/usr/local/bin/brew shellenv)"
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home)
 
 export TVM_HOME="$HOME/Workspace/tvm"
 
