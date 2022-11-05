@@ -10,58 +10,28 @@ end
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
-nvim_tree.setup {
-  update_focused_file = {
-    enable = true,
-    update_cwd = true,
-  },
-  renderer = {
-    root_folder_modifier = ":t",
-    icons = {
-      glyphs = {
-        default = "*",
-        symlink = "*",
-        folder = {
-          arrow_open = "a",
-          arrow_closed = "a",
-          default = "*",
-          open = "o",
-          empty = "e",
-          empty_open = "e",
-          symlink = "s",
-          symlink_open = "s",
-        },
-        git = {
-          unstaged = "*",
-          staged = "S",
-          unmerged = "*",
-          renamed = "r",
-          untracked = "U",
-          deleted = "d",
-          ignored = "i",
-        },
-      },
-    },
-  },
-  diagnostics = {
-    enable = true,
-    show_on_dirs = true,
-    icons = {
-      hint = "h",
-      info = "i",
-      warning = "w",
-      error = "e",
-    },
-  },
+nvim_tree.setup({
+  sort_by = "case_sensitive",
   view = {
-    width = 30,
-    side = "left",
+    adaptive_size = true,
     mappings = {
       list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = "h", cb = tree_cb "close_node" },
-        { key = "v", cb = tree_cb "vsplit" },
+        { key = "u", action = "dir_up" },
       },
     },
   },
-}
+  renderer = {
+    group_empty = true,
+    icons = {
+      show = {
+        file = false,
+        folder = false,
+        git = false, 
+        folder_arrow = false,
+      },
+    },
+  },
+  filters = {
+    dotfiles = true,
+  },
+})

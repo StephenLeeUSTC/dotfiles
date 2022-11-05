@@ -7,10 +7,10 @@ require "user.plugins"
 require "user.autocommands"
 require "user.colorscheme"
 require "user.telescope"
-require "user.treesitter"
+--[[ require "user.treesitter" ]]
 require "user.autopairs"
 require "user.comment"
-require "user.gitsigns"
+--[[ require "user.gitsigns" ]]
 require "user.nvim-tree"
 require "user.bufferline"
 require "user.lualine"
@@ -25,4 +25,3 @@ require "user.hop"
 -- lsp
 require "user.lsp"
 require "user.cmp"
-
