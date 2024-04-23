@@ -21,15 +21,15 @@ Set default font size
 #+begin_src elisp
   ;;; 更改显示字体大小 12pt
   ;;; http://stackoverflow.com/questions/294664/how-to-set-the-font-size-in-emacs
-  (set-face-attribute 'default nil :height 120)
+  (set-face-attribute 'default nil :height 140)
 #+end_src
 
 Set the package repos, mirror is from [[https://elpamirror.emacs-china.org/][Emacs China]].
 #+BEGIN_SRC elisp
   (require 'package)
-  (setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
-                           ("melpa" . "http://1.15.88.122/melpa/")
-                           ("org"   . "http://1.15.88.122/org/")))
+  (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                           ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                           ("org"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
   (package-initialize)        
 
@@ -46,6 +46,9 @@ Set the package repos, mirror is from [[https://elpamirror.emacs-china.org/][Ema
   ;;; Make sure packages are downloaded and installed before they are run
   ;;; also frees you from having to put :ensure t after installing EVERY PACKAGE.
   (setq use-package-always-ensure t)
+
+  ;;; improve the speed of opening the emacs. ERROR now, why?
+  ;;; (setq use-package-always-defer t)
 #+END_SRC
 
 Change some emacs default config.
@@ -76,7 +79,7 @@ Change some emacs default config.
   ;;; 关闭工具栏
   (tool-bar-mode -1)
   ;;; 显示行号
-  (global-linum-mode 1)
+  (global-display-line-numbers-mode 1)
     ;;; highlight line
   (global-hl-line-mode 1)
   (setq inhibit-startup-message t)
@@ -269,7 +272,7 @@ Config emacs like vscode.
   (use-package ox-reveal)
   (require 'org-protocol)
   (custom-set-variables
-   '(org-directory "~/OneDrive/orgfiles")
+   '(org-directory "~/Documents/orgfiles")
    '(org-default-notes-file (concat org-directory "/notes.org"))
    '(org-export-html-postamble nil)
    '(org-hide-leading-stars t)
@@ -293,21 +296,21 @@ Config emacs like vscode.
             (alltodo "")))))
 
 
-  (setq org-agenda-files (list "~/OneDrive/orgfiles/notes.org"
-                               "~/OneDrive/orgfiles/i.org"))
+  (setq org-agenda-files (list "~/Documents/orgfiles/notes.org"
+                               "~/Documents/orgfiles/i.org"))
 
   (setq org-capture-templates
-        '(("l" "Link" entry (file+headline "~/OneDrive/orgfiles/links.org" "Links")
+        '(("l" "Link" entry (file+headline "~/Documents/orgfiles/links.org" "Links")
            "* %a %^g\n %?\n %T\n %i")
-          ("b" "Blog idea" entry (file+headline "~/OneDrive/orgfiles/i.org" "POSTS:")
+          ("b" "Blog idea" entry (file+headline "~/Documents/orgfiles/i.org" "POSTS:")
            "* %?\n%T" :prepend t)
-          ("t" "To Do Item" entry (file+headline "~/OneDrive/orgfiles/i.org" "To Do and Notes")
+          ("t" "To Do Item" entry (file+headline "~/Documents/orgfiles/i.org" "To Do and Notes")
            "* TODO %?\n%u" :prepend t)
-          ("m" "Mail To Do" entry (file+headline "~/OneDrive/orgfiles/i.org" "To Do and Notes")
+          ("m" "Mail To Do" entry (file+headline "~/Documents/orgfiles/i.org" "To Do and Notes")
            "* TODO %a\n %?" :prepend t)
-          ("n" "Note" entry (file+olp "~/OneDrive/orgfiles/i.org" "Notes")
+          ("n" "Note" entry (file+olp "~/Documents/orgfiles/i.org" "Notes")
            "* %u %? " :prepend t)
-          ("r" "RSS" entry (file+headline "~/OneDrive/shared/elfeed.org" "Feeds misc")
+          ("r" "RSS" entry (file+headline "~/Documents/shared/elfeed.org" "Feeds misc")
            "** %A %^g\n")
           ))
 
