@@ -10,7 +10,7 @@
 [init]
   defaultBranch = main
 [core]
-	editor = nvim
+	editor = vim
 	pager = less -x1,5
 	autocrlf = input
 [color]
